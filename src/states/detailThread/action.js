@@ -1,16 +1,16 @@
-import apiService from "../../utils/api";
-import { showLoadingBar, hideLoadingBar } from "../loadingBar/action";
+import apiService from '../../utils/api';
+import { showLoadingBar, hideLoadingBar } from '../loadingBar/action';
 
 const ActionType = {
-  RECEIVE_DETAIL_THREAD: "RECEIVE_DETAIL_THREAD",
-  CLEAR_DETAIL_THREAD: "CLEAR_DETAIL_THREAD",
-  ADD_COMMENT: "ADD_COMMENT",
-  UPVOTE_DETAIL_THREAD: "UPVOTE_DETAIL_THREAD",
-  DOWNVOTE_DETAIL_THREAD: "DOWNVOTE_DETAIL_THREAD",
-  NEUTRALIZE_DETAIL_THREAD_VOTE: "NEUTRALIZE_DETAIL_THREAD_VOTE",
-  UPVOTE_COMMENT: "UPVOTE_COMMENT",
-  DOWNVOTE_COMMENT: "DOWNVOTE_COMMENT",
-  NEUTRALIZE_COMMENT: "NEUTRALIZE_COMMENT_VOTE",
+  RECEIVE_DETAIL_THREAD: 'RECEIVE_DETAIL_THREAD',
+  CLEAR_DETAIL_THREAD: 'CLEAR_DETAIL_THREAD',
+  ADD_COMMENT: 'ADD_COMMENT',
+  UPVOTE_DETAIL_THREAD: 'UPVOTE_DETAIL_THREAD',
+  DOWNVOTE_DETAIL_THREAD: 'DOWNVOTE_DETAIL_THREAD',
+  NEUTRALIZE_DETAIL_THREAD_VOTE: 'NEUTRALIZE_DETAIL_THREAD_VOTE',
+  UPVOTE_COMMENT: 'UPVOTE_COMMENT',
+  DOWNVOTE_COMMENT: 'DOWNVOTE_COMMENT',
+  NEUTRALIZE_COMMENT: 'NEUTRALIZE_COMMENT_VOTE',
 };
 
 function receiveDetailThreadActionCreator(detailThread) {
@@ -105,17 +105,14 @@ function asyncReceiveDetailThread(threadId) {
   return async (dispatch) => {
     dispatch(showLoadingBar());
     try {
-      const { error, data: detailThread } = await apiService.getDetailThread(
-        threadId
-      );
+      const { error, data: detailThread } = await apiService.getDetailThread(threadId);
       if (!error) {
         dispatch(receiveDetailThreadActionCreator(detailThread.detailThread));
       } else {
-        alert(detailThread.data || "Failed to fetch thread detail.");
+        alert(detailThread.data || 'Failed to fetch thread detail.');
       }
     } catch (error) {
-      console.error("Error fetching detail thread:", error);
-      alert("An unexpected error occurred while fetching thread detail.");
+      alert('An unexpected error occurred while fetching thread detail.');
     }
     dispatch(hideLoadingBar());
   };
@@ -131,14 +128,13 @@ function asyncAddComment({ threadId, content }) {
       });
       if (!error) {
         dispatch(
-          addCommentActionCreator({ threadId, comment: comment.comment })
+          addCommentActionCreator({ threadId, comment: comment.comment }),
         );
       } else {
-        alert(comment.data || "Failed to add comment.");
+        alert(comment.data || 'Failed to add comment.');
       }
     } catch (error) {
-      console.error("Error adding comment:", error);
-      alert("An unexpected error occurred while adding comment.");
+      alert('An unexpected error occurred while adding comment.');
     }
     dispatch(hideLoadingBar());
   };
@@ -150,7 +146,7 @@ function asyncUpVoteDetailThread(threadId) {
     if (!authUser) return;
 
     dispatch(
-      upVoteDetailThreadActionCreator({ threadId, userId: authUser.id })
+      upVoteDetailThreadActionCreator({ threadId, userId: authUser.id }),
     );
     dispatch(showLoadingBar());
 
@@ -161,19 +157,18 @@ function asyncUpVoteDetailThread(threadId) {
           neutralizeDetailThreadVoteActionCreator({
             threadId,
             userId: authUser.id,
-          })
+          }),
         );
-        alert("Failed to upvote thread. Please try again.");
+        alert('Failed to upvote thread. Please try again.');
       }
     } catch (error) {
       dispatch(
         neutralizeDetailThreadVoteActionCreator({
           threadId,
           userId: authUser.id,
-        })
+        }),
       );
-      console.error("Error upvoting detail thread:", error);
-      alert("An unexpected error occurred while upvoting thread.");
+      alert('An unexpected error occurred while upvoting thread.');
     }
     dispatch(hideLoadingBar());
   };
@@ -185,7 +180,7 @@ function asyncDownVoteDetailThread(threadId) {
     if (!authUser) return;
 
     dispatch(
-      downVoteDetailThreadActionCreator({ threadId, userId: authUser.id })
+      downVoteDetailThreadActionCreator({ threadId, userId: authUser.id }),
     );
     dispatch(showLoadingBar());
 
@@ -196,19 +191,18 @@ function asyncDownVoteDetailThread(threadId) {
           neutralizeDetailThreadVoteActionCreator({
             threadId,
             userId: authUser.id,
-          })
+          }),
         );
-        alert("Failed to downvote thread. Please try again.");
+        alert('Failed to downvote thread. Please try again.');
       }
     } catch (error) {
       dispatch(
         neutralizeDetailThreadVoteActionCreator({
           threadId,
           userId: authUser.id,
-        })
+        }),
       );
-      console.error("Error downvoting detail thread:", error);
-      alert("An unexpected error occurred while downvoting thread.");
+      alert('An unexpected error occurred while downvoting thread.');
     }
     dispatch(hideLoadingBar());
   };
@@ -220,18 +214,17 @@ function asyncNeutralizeDetailThreadVote(threadId) {
     if (!authUser) return;
 
     dispatch(
-      neutralizeDetailThreadVoteActionCreator({ threadId, userId: authUser.id })
+      neutralizeDetailThreadVoteActionCreator({ threadId, userId: authUser.id }),
     );
     dispatch(showLoadingBar());
 
     try {
       const { error } = await apiService.neutralizeThreadVote(threadId);
       if (error) {
-        alert("Failed to neutralize thread vote. Please try again.");
+        alert('Failed to neutralize thread vote. Please try again.');
       }
     } catch (error) {
-      console.error("Error neutralizing detail thread vote:", error);
-      alert("An unexpected error occurred while neutralizing thread vote.");
+      alert('An unexpected error occurred while neutralizing thread vote.');
     }
     dispatch(hideLoadingBar());
   };
@@ -243,7 +236,7 @@ function asyncUpVoteComment({ threadId, commentId }) {
     if (!authUser) return;
 
     dispatch(
-      upVoteCommentActionCreator({ threadId, commentId, userId: authUser.id })
+      upVoteCommentActionCreator({ threadId, commentId, userId: authUser.id }),
     );
     dispatch(showLoadingBar());
 
@@ -255,9 +248,9 @@ function asyncUpVoteComment({ threadId, commentId }) {
             threadId,
             commentId,
             userId: authUser.id,
-          })
+          }),
         );
-        alert("Failed to upvote comment. Please try again.");
+        alert('Failed to upvote comment. Please try again.');
       }
     } catch (error) {
       dispatch(
@@ -265,10 +258,9 @@ function asyncUpVoteComment({ threadId, commentId }) {
           threadId,
           commentId,
           userId: authUser.id,
-        })
+        }),
       );
-      console.error("Error upvoting comment:", error);
-      alert("An unexpected error occurred while upvoting comment.");
+      alert('An unexpected error occurred while upvoting comment.');
     }
     dispatch(hideLoadingBar());
   };
@@ -280,7 +272,7 @@ function asyncDownVoteComment({ threadId, commentId }) {
     if (!authUser) return;
 
     dispatch(
-      downVoteCommentActionCreator({ threadId, commentId, userId: authUser.id })
+      downVoteCommentActionCreator({ threadId, commentId, userId: authUser.id }),
     );
     dispatch(showLoadingBar());
 
@@ -295,9 +287,9 @@ function asyncDownVoteComment({ threadId, commentId }) {
             threadId,
             commentId,
             userId: authUser.id,
-          })
+          }),
         );
-        alert("Failed to downvote comment. Please try again.");
+        alert('Failed to downvote comment. Please try again.');
       }
     } catch (error) {
       dispatch(
@@ -305,10 +297,9 @@ function asyncDownVoteComment({ threadId, commentId }) {
           threadId,
           commentId,
           userId: authUser.id,
-        })
+        }),
       );
-      console.error("Error downvoting comment:", error);
-      alert("An unexpected error occurred while downvoting comment.");
+      alert('An unexpected error occurred while downvoting comment.');
     }
     dispatch(hideLoadingBar());
   };
@@ -324,7 +315,7 @@ function asyncNeutralizeCommentVote({ threadId, commentId }) {
         threadId,
         commentId,
         userId: authUser.id,
-      })
+      }),
     );
     dispatch(showLoadingBar());
 
@@ -334,11 +325,10 @@ function asyncNeutralizeCommentVote({ threadId, commentId }) {
         commentId,
       });
       if (error) {
-        alert("Failed to neutralize comment vote. Please try again.");
+        alert('Failed to neutralize comment vote. Please try again.');
       }
     } catch (error) {
-      console.error("Error neutralizing comment vote:", error);
-      alert("An unexpected error occurred while neutralizing comment vote.");
+      alert('An unexpected error occurred while neutralizing comment vote.');
     }
     dispatch(hideLoadingBar());
   };

@@ -1,13 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function CategoryFilter({ categories, selectedCategory, onSelectCategory }) {
   return (
     <div className="category-filter">
       <button
         type="button"
-        className={`category-button ${selectedCategory === "" ? "active" : ""}`}
-        onClick={() => onSelectCategory("")}>
+        className={`category-button ${selectedCategory === '' ? 'active' : ''}`}
+        onClick={() => onSelectCategory('')}
+      >
         All
       </button>
       {categories.map((category) => (
@@ -15,10 +16,12 @@ function CategoryFilter({ categories, selectedCategory, onSelectCategory }) {
           type="button"
           key={category}
           className={`category-button ${
-            selectedCategory === category ? "active" : ""
+            selectedCategory === category ? 'active' : ''
           }`}
-          onClick={() => onSelectCategory(category)}>
-          #{category}
+          onClick={() => onSelectCategory(category)}
+        >
+          #
+          {category}
         </button>
       ))}
     </div>

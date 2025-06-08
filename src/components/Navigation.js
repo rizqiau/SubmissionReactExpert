@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 function Navigation({ authUser, signOut }) {
   const { avatar, name } = authUser;
@@ -26,8 +26,14 @@ function Navigation({ authUser, signOut }) {
   );
 }
 
+const authUserShape = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
+};
+
 Navigation.propTypes = {
-  authUser: PropTypes.object.isRequired,
+  authUser: PropTypes.shape(authUserShape).isRequired,
   signOut: PropTypes.func.isRequired,
 };
 

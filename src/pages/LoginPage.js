@@ -1,11 +1,11 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { asyncSetAuthUser } from "../states/authUser/action";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { asyncSetAuthUser } from '../states/authUser/action';
 
 function LoginPage() {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -13,7 +13,7 @@ function LoginPage() {
     event.preventDefault();
 
     dispatch(asyncSetAuthUser({ email, password })).then(() => {
-      navigate("/");
+      navigate('/');
     });
   };
 
@@ -38,7 +38,9 @@ function LoginPage() {
         <button type="submit">Login</button>
       </form>
       <p>
-        Belum punya akun? <Link to="/register">Daftar di sini</Link>
+        Belum punya akun?
+        {' '}
+        <Link to="/register">Daftar di sini</Link>
       </p>
     </div>
   );

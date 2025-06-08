@@ -1,5 +1,5 @@
 const ActionType = {
-  RECEIVE_USERS: "RECEIVE_USERS",
+  RECEIVE_USERS: 'RECEIVE_USERS',
 };
 
 function receiveUsersActionCreator(users) {

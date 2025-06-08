@@ -1,13 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
 
-const BASE_URL = "https://forum-api.dicoding.dev/v1";
+const BASE_URL = 'https://forum-api.dicoding.dev/v1';
 
 function putAccessToken(token) {
-  localStorage.setItem("accessToken", token);
+  localStorage.setItem('accessToken', token);
 }
 
 function getAccessToken() {
-  return localStorage.getItem("accessToken");
+  return localStorage.getItem('accessToken');
 }
 
 const api = axios.create({
@@ -17,19 +17,21 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = getAccessToken();
+    const newConfig = { ...config };
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      newConfig.headers = {
+        ...newConfig.headers,
+        Authorization: `Bearer ${token}`,
+      };
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error),
 );
 
 async function register({ name, email, password }) {
   try {
-    const response = await api.post("/register", { name, email, password });
+    const response = await api.post('/register', { name, email, password });
     return { error: false, data: response.data.data };
   } catch (caughtError) {
     return { error: true, message: caughtError.response.data.message };
@@ -38,7 +40,7 @@ async function register({ name, email, password }) {
 
 async function login({ email, password }) {
   try {
-    const response = await api.post("/login", { email, password });
+    const response = await api.post('/login', { email, password });
     return { error: false, data: response.data.data };
   } catch (caughtError) {
     return { error: true, message: caughtError.response.data.message };
@@ -47,7 +49,7 @@ async function login({ email, password }) {
 
 async function getOwnProfile() {
   try {
-    const response = await api.get("/users/me");
+    const response = await api.get('/users/me');
     return { error: false, data: response.data.data };
   } catch (caughtError) {
     return { error: true, message: caughtError.response.data.message };
@@ -56,7 +58,7 @@ async function getOwnProfile() {
 
 async function getAllUsers() {
   try {
-    const response = await api.get("/users");
+    const response = await api.get('/users');
     return { error: false, data: response.data.data };
   } catch (caughtError) {
     return { error: true, message: caughtError.response.data.message };
@@ -65,7 +67,7 @@ async function getAllUsers() {
 
 async function getAllThreads() {
   try {
-    const response = await api.get("/threads");
+    const response = await api.get('/threads');
     return { error: false, data: response.data.data };
   } catch (caughtError) {
     return { error: true, message: caughtError.response.data.message };
@@ -81,9 +83,9 @@ async function getDetailThread(threadId) {
   }
 }
 
-async function createThread({ title, body, category = "" }) {
+async function createThread({ title, body, category = '' }) {
   try {
-    const response = await api.post("/threads", { title, body, category });
+    const response = await api.post('/threads', { title, body, category });
     return { error: false, data: response.data.data };
   } catch (caughtError) {
     return { error: true, message: caughtError.response.data.message };
@@ -131,7 +133,7 @@ async function neutralizeThreadVote(threadId) {
 async function upVoteComment({ threadId, commentId }) {
   try {
     const response = await api.post(
-      `/threads/${threadId}/comments/${commentId}/up-vote`
+      `/threads/${threadId}/comments/${commentId}/up-vote`,
     );
     return { error: false, data: response.data.data };
   } catch (caughtError) {
@@ -142,7 +144,7 @@ async function upVoteComment({ threadId, commentId }) {
 async function downVoteComment({ threadId, commentId }) {
   try {
     const response = await api.post(
-      `/threads/${threadId}/comments/${commentId}/down-vote`
+      `/threads/${threadId}/comments/${commentId}/down-vote`,
     );
     return { error: false, data: response.data.data };
   } catch (caughtError) {
@@ -153,7 +155,7 @@ async function downVoteComment({ threadId, commentId }) {
 async function neutralizeCommentVote({ threadId, commentId }) {
   try {
     const response = await api.post(
-      `/threads/${threadId}/comments/${commentId}/neutral-vote`
+      `/threads/${threadId}/comments/${commentId}/neutral-vote`,
     );
     return { error: false, data: response.data.data };
   } catch (caughtError) {
@@ -163,7 +165,7 @@ async function neutralizeCommentVote({ threadId, commentId }) {
 
 async function getLeaderboards() {
   try {
-    const response = await api.get("/leaderboards");
+    const response = await api.get('/leaderboards');
     return { error: false, data: response.data.data };
   } catch (caughtError) {
     return { error: true, message: caughtError.response.data.message };

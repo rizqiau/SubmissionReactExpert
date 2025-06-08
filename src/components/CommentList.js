@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import CommentItem from "./CommentItem";
+import React from 'react';
+import PropTypes from 'prop-types';
+import CommentItem from './CommentItem';
 
 function CommentList({
   comments,
@@ -13,7 +13,12 @@ function CommentList({
       {comments.map((comment) => (
         <CommentItem
           key={comment.id}
-          {...comment}
+          id={comment.id}
+          content={comment.content}
+          createdAt={comment.createdAt}
+          owner={comment.owner}
+          upVotesBy={comment.upVotesBy}
+          downVotesBy={comment.downVotesBy}
           authUser={authUser}
           onUpVote={onUpVoteComment}
           onDownVote={onDownVoteComment}
@@ -36,11 +41,21 @@ const commentShape = {
   downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
+const authUserShape = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
+};
+
 CommentList.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.shape(commentShape)).isRequired,
-  authUser: PropTypes.object,
+  authUser: PropTypes.shape(authUserShape),
   onUpVoteComment: PropTypes.func.isRequired,
   onDownVoteComment: PropTypes.func.isRequired,
+};
+
+CommentList.defaultProps = {
+  authUser: null,
 };
 
 export default CommentList;

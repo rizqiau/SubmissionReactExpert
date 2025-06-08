@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { postedAt } from "../utils";
-import parser from "html-react-parser";
+import React from 'react';
+import PropTypes from 'prop-types';
+import parser from 'html-react-parser';
+import { postedAt } from '../utils';
 
 function CommentItem({
   id,
@@ -40,15 +40,21 @@ function CommentItem({
       <div className="comment-item__footer">
         <button
           type="button"
-          className={`vote-button ${isUpVoted ? "voted" : ""}`}
-          onClick={handleUpVote}>
-          👍 {upVotesBy.length}
+          className={`vote-button ${isUpVoted ? 'voted' : ''}`}
+          onClick={handleUpVote}
+        >
+          👍
+          {' '}
+          {upVotesBy.length}
         </button>
         <button
           type="button"
-          className={`vote-button ${isDownVoted ? "voted" : ""}`}
-          onClick={handleDownVote}>
-          👎 {downVotesBy.length}
+          className={`vote-button ${isDownVoted ? 'voted' : ''}`}
+          onClick={handleDownVote}
+        >
+          👎
+          {' '}
+          {downVotesBy.length}
         </button>
       </div>
     </div>
@@ -61,6 +67,12 @@ const ownerShape = {
   avatar: PropTypes.string.isRequired,
 };
 
+const authUserShape = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
+};
+
 CommentItem.propTypes = {
   id: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
@@ -68,9 +80,13 @@ CommentItem.propTypes = {
   owner: PropTypes.shape(ownerShape).isRequired,
   upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
   downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
-  authUser: PropTypes.object,
+  authUser: PropTypes.shape(authUserShape),
   onUpVote: PropTypes.func.isRequired,
   onDownVote: PropTypes.func.isRequired,
+};
+
+CommentItem.defaultProps = {
+  authUser: null,
 };
 
 export default CommentItem;

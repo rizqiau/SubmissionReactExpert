@@ -1,9 +1,9 @@
-import apiService from "../../utils/api";
-import { showLoadingBar, hideLoadingBar } from "../loadingBar/action";
+import apiService from '../../utils/api';
+import { showLoadingBar, hideLoadingBar } from '../loadingBar/action';
 
 const ActionType = {
-  SET_AUTH_USER: "SET_AUTH_USER",
-  UNSET_AUTH_USER: "UNSET_AUTH_USER",
+  SET_AUTH_USER: 'SET_AUTH_USER',
+  UNSET_AUTH_USER: 'UNSET_AUTH_USER',
 };
 
 function setAuthUserActionCreator(authUser) {
@@ -39,27 +39,58 @@ function asyncSetAuthUser({ email, password }) {
         } = await apiService.getOwnProfile();
         if (!userError) {
           dispatch(setAuthUserActionCreator(user.user));
-        } else {
-          console.error("Failed to get user profile after login:", userMessage);
-          apiService.putAccessToken("");
-          dispatch(unsetAuthUserActionCreator());
-          alert(userMessage || "Failed to fetch user profile after login.");
+          return { success: true };
         }
-      } else {
-        alert(loginMessage || "Login failed.");
+        apiService.putAccessToken('');
+        dispatch(unsetAuthUserActionCreator());
+        alert(userMessage || 'Failed to fetch user profile after login.');
+        return { success: false, message: userMessage };
       }
+      alert(loginMessage || 'Login failed.');
+      return { success: false, message: loginMessage };
     } catch (caughtError) {
-      console.error("Login unexpected error:", caughtError);
-      alert("An unexpected error occurred during login.");
+      alert('An unexpected error occurred during login.');
+      return {
+        success: false,
+        message: 'An unexpected error occurred during login.',
+      };
+    } finally {
+      dispatch(hideLoadingBar());
     }
-    dispatch(hideLoadingBar());
   };
 }
 
 function asyncUnsetAuthUser() {
   return (dispatch) => {
     dispatch(setAuthUserActionCreator(null));
-    apiService.putAccessToken("");
+    apiService.putAccessToken('');
+  };
+}
+
+function asyncRegisterUser({ name, email, password }) {
+  return async (dispatch) => {
+    dispatch(showLoadingBar());
+    try {
+      const { error, message } = await apiService.register({
+        name,
+        email,
+        password,
+      });
+      if (!error) {
+        alert('Pendaftaran berhasil! Silakan login.');
+        return { success: true };
+      }
+      alert(message || 'Pendaftaran gagal.');
+      return { success: false, message };
+    } catch (caughtError) {
+      alert('An unexpected error occurred during registration.');
+      return {
+        success: false,
+        message: 'An unexpected error occurred during registration.',
+      };
+    } finally {
+      dispatch(hideLoadingBar());
+    }
   };
 }
 
@@ -69,4 +100,5 @@ export {
   unsetAuthUserActionCreator,
   asyncSetAuthUser,
   asyncUnsetAuthUser,
+  asyncRegisterUser,
 };

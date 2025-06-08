@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import parser from 'html-react-parser';
 import {
   asyncReceiveDetailThread,
   clearDetailThreadActionCreator,
@@ -13,16 +14,15 @@ import {
   asyncDownVoteComment,
   // eslint-disable-next-line no-unused-vars
   asyncNeutralizeCommentVote,
-} from "../states/detailThread/action";
-import { postedAt } from "../utils";
-import parser from "html-react-parser";
-import AddCommentForm from "../components/AddCommentForm";
-import CommentList from "../components/CommentList";
+} from '../states/detailThread/action';
+import { postedAt } from '../utils';
+import AddCommentForm from '../components/AddCommentForm';
+import CommentList from '../components/CommentList';
 
 function DetailPage() {
   const { id } = useParams();
   const { detailThread = null, authUser = null } = useSelector(
-    (states) => states
+    (states) => states,
   );
   const dispatch = useDispatch();
 
@@ -54,7 +54,7 @@ function DetailPage() {
 
   const onUpVoteThread = () => {
     if (!authUser) {
-      alert("Anda harus login untuk melakukan vote!");
+      alert('Anda harus login untuk melakukan vote!');
       return;
     }
     dispatch(asyncUpVoteDetailThread(id));
@@ -62,7 +62,7 @@ function DetailPage() {
 
   const onDownVoteThread = () => {
     if (!authUser) {
-      alert("Anda harus login untuk melakukan vote!");
+      alert('Anda harus login untuk melakukan vote!');
       return;
     }
     dispatch(asyncDownVoteDetailThread(id));
@@ -74,7 +74,7 @@ function DetailPage() {
 
   const onUpVoteComment = (commentId) => {
     if (!authUser) {
-      alert("Anda harus login untuk melakukan vote!");
+      alert('Anda harus login untuk melakukan vote!');
       return;
     }
     dispatch(asyncUpVoteComment({ threadId: id, commentId }));
@@ -82,7 +82,7 @@ function DetailPage() {
 
   const onDownVoteComment = (commentId) => {
     if (!authUser) {
-      alert("Anda harus login untuk melakukan vote!");
+      alert('Anda harus login untuk melakukan vote!');
       return;
     }
     dispatch(asyncDownVoteComment({ threadId: id, commentId }));
@@ -90,7 +90,10 @@ function DetailPage() {
 
   return (
     <div className="detail-page">
-      <p className="detail-page__category">#{category}</p>
+      <p className="detail-page__category">
+        #
+        {category}
+      </p>
       <h2 className="detail-page__title">{title}</h2>
       <div className="detail-page__owner-info">
         <img src={owner.avatar} alt={owner.name} />
@@ -101,15 +104,21 @@ function DetailPage() {
         <div className="detail-page__votes">
           <button
             type="button"
-            className={`vote-button ${isUpVoted ? "voted" : ""}`}
-            onClick={onUpVoteThread}>
-            👍 {upVotesBy.length}
+            className={`vote-button ${isUpVoted ? 'voted' : ''}`}
+            onClick={onUpVoteThread}
+          >
+            👍
+            {' '}
+            {upVotesBy.length}
           </button>
           <button
             type="button"
-            className={`vote-button ${isDownVoted ? "voted" : ""}`}
-            onClick={onDownVoteThread}>
-            👎 {downVotesBy.length}
+            className={`vote-button ${isDownVoted ? 'voted' : ''}`}
+            onClick={onDownVoteThread}
+          >
+            👎
+            {' '}
+            {downVotesBy.length}
           </button>
         </div>
         <p className="detail-page__date">{postedAt(createdAt)}</p>
@@ -117,7 +126,11 @@ function DetailPage() {
 
       {authUser && <AddCommentForm onAddComment={onAddComment} />}
 
-      <h3>Komentar ({comments.length})</h3>
+      <h3>
+        Komentar (
+        {comments.length}
+        )
+      </h3>
       <CommentList
         comments={comments}
         authUser={authUser}

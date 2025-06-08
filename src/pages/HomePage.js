@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { asyncPopulateThreadsAndUsers } from "../states/threads/action";
-import { Link } from "react-router-dom";
-import ThreadList from "../components/ThreadList";
-import CategoryFilter from "../components/CategoryFilter";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { asyncPopulateThreadsAndUsers } from '../states/threads/action';
+import ThreadList from '../components/ThreadList';
+import CategoryFilter from '../components/CategoryFilter';
 
 function HomePage() {
   const {
@@ -14,7 +14,7 @@ function HomePage() {
   } = useSelector((states) => states);
 
   const dispatch = useDispatch();
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
     dispatch(asyncPopulateThreadsAndUsers());

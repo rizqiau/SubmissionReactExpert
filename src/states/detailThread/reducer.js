@@ -1,6 +1,6 @@
-import { ActionType } from "./action";
+import { ActionType } from './action';
 
-function detailThreadReducer(detailThread = null, action) {
+function detailThreadReducer(action, detailThread = null) {
   switch (action.type) {
     case ActionType.RECEIVE_DETAIL_THREAD:
       return action.payload.detailThread;
@@ -20,11 +20,11 @@ function detailThreadReducer(detailThread = null, action) {
           ...detailThread,
           upVotesBy: detailThread.upVotesBy.includes(action.payload.userId)
             ? detailThread.upVotesBy.filter(
-                (id) => id !== action.payload.userId
-              )
+              (id) => id !== action.payload.userId,
+            )
             : [...detailThread.upVotesBy, action.payload.userId],
           downVotesBy: detailThread.downVotesBy.filter(
-            (id) => id !== action.payload.userId
+            (id) => id !== action.payload.userId,
           ),
         };
       }
@@ -35,11 +35,11 @@ function detailThreadReducer(detailThread = null, action) {
           ...detailThread,
           downVotesBy: detailThread.downVotesBy.includes(action.payload.userId)
             ? detailThread.downVotesBy.filter(
-                (id) => id !== action.payload.userId
-              )
+              (id) => id !== action.payload.userId,
+            )
             : [...detailThread.downVotesBy, action.payload.userId],
           upVotesBy: detailThread.upVotesBy.filter(
-            (id) => id !== action.payload.userId
+            (id) => id !== action.payload.userId,
           ),
         };
       }
@@ -49,10 +49,10 @@ function detailThreadReducer(detailThread = null, action) {
         return {
           ...detailThread,
           upVotesBy: detailThread.upVotesBy.filter(
-            (id) => id !== action.payload.userId
+            (id) => id !== action.payload.userId,
           ),
           downVotesBy: detailThread.downVotesBy.filter(
-            (id) => id !== action.payload.userId
+            (id) => id !== action.payload.userId,
           ),
         };
       }
@@ -67,11 +67,11 @@ function detailThreadReducer(detailThread = null, action) {
                 ...comment,
                 upVotesBy: comment.upVotesBy.includes(action.payload.userId)
                   ? comment.upVotesBy.filter(
-                      (id) => id !== action.payload.userId
-                    )
+                    (id) => id !== action.payload.userId,
+                  )
                   : [...comment.upVotesBy, action.payload.userId],
                 downVotesBy: comment.downVotesBy.filter(
-                  (id) => id !== action.payload.userId
+                  (id) => id !== action.payload.userId,
                 ),
               };
             }
@@ -90,11 +90,11 @@ function detailThreadReducer(detailThread = null, action) {
                 ...comment,
                 downVotesBy: comment.downVotesBy.includes(action.payload.userId)
                   ? comment.downVotesBy.filter(
-                      (id) => id !== action.payload.userId
-                    )
+                    (id) => id !== action.payload.userId,
+                  )
                   : [...comment.downVotesBy, action.payload.userId],
                 upVotesBy: comment.upVotesBy.filter(
-                  (id) => id !== action.payload.userId
+                  (id) => id !== action.payload.userId,
                 ),
               };
             }
@@ -112,10 +112,10 @@ function detailThreadReducer(detailThread = null, action) {
               return {
                 ...comment,
                 upVotesBy: comment.upVotesBy.filter(
-                  (id) => id !== action.payload.userId
+                  (id) => id !== action.payload.userId,
                 ),
                 downVotesBy: comment.downVotesBy.filter(
-                  (id) => id !== action.payload.userId
+                  (id) => id !== action.payload.userId,
                 ),
               };
             }

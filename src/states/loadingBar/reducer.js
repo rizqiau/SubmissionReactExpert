@@ -1,6 +1,6 @@
-import { ActionType } from "./action";
+import { ActionType } from './action';
 
-function loadingBarReducer(loadingBar = 0, action) {
+function loadingBarReducer(action, loadingBar = 0) {
   switch (action.type) {
     case ActionType.SHOW_LOADING_BAR:
       return loadingBar + 1;

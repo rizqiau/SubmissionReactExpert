@@ -1,14 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function AddCommentForm({ onAddComment }) {
-  const [content, setContent] = React.useState("");
+  const [content, setContent] = React.useState('');
 
   const onSubmit = (event) => {
     event.preventDefault();
     if (content.trim()) {
       onAddComment(content);
-      setContent("");
+      setContent('');
     }
   };
 
@@ -21,7 +21,8 @@ function AddCommentForm({ onAddComment }) {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows="5"
-          required></textarea>
+          required
+        />
         <button type="submit">Kirim Komentar</button>
       </form>
     </div>

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { asyncAddThread } from "../states/threads/action";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { asyncAddThread } from '../states/threads/action';
 
 function AddThreadPage() {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [category, setCategory] = useState("");
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [category, setCategory] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -14,10 +14,10 @@ function AddThreadPage() {
     event.preventDefault();
     if (title.trim() && body.trim()) {
       dispatch(asyncAddThread({ title, body, category })).then(() => {
-        navigate("/");
+        navigate('/');
       });
     } else {
-      alert("Judul dan isi thread tidak boleh kosong!");
+      alert('Judul dan isi thread tidak boleh kosong!');
     }
   };
 
@@ -43,7 +43,8 @@ function AddThreadPage() {
           value={body}
           onChange={(e) => setBody(e.target.value)}
           rows="10"
-          required></textarea>
+          required
+        />
         <button type="submit">Buat Thread</button>
       </form>
     </div>

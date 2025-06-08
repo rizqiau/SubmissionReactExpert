@@ -1,9 +1,9 @@
-import apiService from "../../utils/api";
-import { setAuthUserActionCreator } from "../authUser/action";
-import { showLoadingBar, hideLoadingBar } from "../loadingBar/action";
+import apiService from '../../utils/api';
+import { setAuthUserActionCreator } from '../authUser/action';
+import { showLoadingBar, hideLoadingBar } from '../loadingBar/action';
 
 const ActionType = {
-  SET_IS_PRELOAD: "SET_IS_PRELOAD",
+  SET_IS_PRELOAD: 'SET_IS_PRELOAD',
 };
 
 function setIsPreloadActionCreator(isPreload) {
@@ -26,7 +26,7 @@ function asyncPreloadProcess() {
         dispatch(setAuthUserActionCreator(null));
       }
     } catch (error) {
-      console.error("Error during preload process:", error);
+      console.error('Error during preload process:', error);
       dispatch(setAuthUserActionCreator(null));
     } finally {
       dispatch(setIsPreloadActionCreator(false));
