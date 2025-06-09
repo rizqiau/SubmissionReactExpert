@@ -1,45 +1,38 @@
-// src/App.js
-
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom'; // Import Routes dan Route
-import { useDispatch, useSelector } from 'react-redux'; // Import hook Redux
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { asyncPreloadProcess } from './states/isPreload/action';
-import { asyncUnsetAuthUser } from './states/authUser/action'; // Import action untuk logout
+import { asyncUnsetAuthUser } from './states/authUser/action';
 
-// Import Halaman/Komponen yang akan dibuat (akan kita buat nanti)
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import DetailPage from './pages/DetailPage';
 import AddThreadPage from './pages/AddThreadPage';
 import LeaderboardsPage from './pages/LeaderboardsPage';
-import Navigation from './components/Navigation'; // Komponen navigasi (akan kita buat)
-import Loading from './components/Loading'; // Komponen loading bar (akan kita buat)
+import Navigation from './components/Navigation';
+import Loading from './components/Loading';
 
 function App() {
   const {
     authUser = null,
     isPreload = false,
-    loadingBar = 0, // Dapatkan state loadingBar dari Redux
-  } = useSelector((states) => states); // Dapatkan semua state dari Redux store
+    loadingBar = 0,
+  } = useSelector((states) => states);
 
   const dispatch = useDispatch();
   const location = useLocation();
 
   useEffect(() => {
-    // Jalankan proses preload saat aplikasi pertama kali dimuat
     dispatch(asyncPreloadProcess());
   }, [dispatch]);
 
   const onSignOut = () => {
-    // Logika untuk sign out
     dispatch(asyncUnsetAuthUser());
-    // Redirect ke halaman login atau home setelah logout (opsional, bisa di handle di komponen login/home)
   };
 
   if (isPreload) {
-    // Tampilkan sesuatu saat preload, misalnya splash screen atau loading indicator minimal
-    return null; // Atau komponen splash screen / loading
+    return null;
   }
 
   const mainContent = authUser === null ? (
@@ -59,7 +52,7 @@ function App() {
   return (
     <>
       <Loading show={loadingBar > 0} />
-      {authUser && ( // Hanya tampilkan navigasi jika sudah login
+      {authUser && (
         <header>
           <Navigation authUser={authUser} signOut={onSignOut} />
         </header>

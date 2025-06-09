@@ -2,7 +2,6 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "jest": true,
     "node": true
   },
   "extends": [
@@ -15,7 +14,7 @@
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 12,
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "plugins": ["react", "react-hooks"],
@@ -24,12 +23,15 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-unused-vars": "warn",
     "import/prefer-default-export": "off",
-    "react/prop-types": "warn",
     "no-alert": "off",
-    "max-len": ["warn", { "code": 120 }],
-    "camelcase": "off",
-    "no-underscore-dangle": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "no-param-reassign": ["error", { "props": false }],
+    "default-param-last": "off",
+    "react/forbid-prop-types": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn"
   },
   "settings": {
     "react": {
