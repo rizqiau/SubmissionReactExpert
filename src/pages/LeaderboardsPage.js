@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { asyncReceiveLeaderboards } from '../states/leaderboards/action';
 
 function LeaderboardsPage() {
-  const { leaderboards = [] } = useSelector((states) => states);
+  const leaderboards = useSelector((state) => state.leaderboards);
   const dispatch = useDispatch();
 
   useEffect(() => {

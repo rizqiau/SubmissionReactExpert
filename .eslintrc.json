@@ -31,7 +31,10 @@
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/click-events-have-key-events": "warn",
-    "jsx-a11y/no-static-element-interactions": "warn"
+    "jsx-a11y/no-static-element-interactions": "warn",
+    "react/jsx-one-expression-per-line": "off",
+    "quotes": ["error", "single"],
+    "react/jsx-closing-bracket-location": "off"
   },
   "settings": {
     "react": {

@@ -24,7 +24,7 @@ api.interceptors.request.use(
         Authorization: `Bearer ${token}`,
       };
     }
-    return config;
+    return newConfig;
   },
   (error) => Promise.reject(error),
 );

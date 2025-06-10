@@ -21,9 +21,8 @@ import CommentList from '../components/CommentList';
 
 function DetailPage() {
   const { id } = useParams();
-  const { detailThread = null, authUser = null } = useSelector(
-    (states) => states,
-  );
+  const detailThread = useSelector((state) => state.detailThread);
+  const authUser = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -90,10 +89,7 @@ function DetailPage() {
 
   return (
     <div className="detail-page">
-      <p className="detail-page__category">
-        #
-        {category}
-      </p>
+      <p className="detail-page__category">#{category}</p>
       <h2 className="detail-page__title">{title}</h2>
       <div className="detail-page__owner-info">
         <img src={owner.avatar} alt={owner.name} />
@@ -105,20 +101,14 @@ function DetailPage() {
           <button
             type="button"
             className={`vote-button ${isUpVoted ? 'voted' : ''}`}
-            onClick={onUpVoteThread}
-          >
-            👍
-            {' '}
-            {upVotesBy.length}
+            onClick={onUpVoteThread}>
+            👍 {upVotesBy.length}
           </button>
           <button
             type="button"
             className={`vote-button ${isDownVoted ? 'voted' : ''}`}
-            onClick={onDownVoteThread}
-          >
-            👎
-            {' '}
-            {downVotesBy.length}
+            onClick={onDownVoteThread}>
+            👎 {downVotesBy.length}
           </button>
         </div>
         <p className="detail-page__date">{postedAt(createdAt)}</p>
@@ -126,11 +116,7 @@ function DetailPage() {
 
       {authUser && <AddCommentForm onAddComment={onAddComment} />}
 
-      <h3>
-        Komentar (
-        {comments.length}
-        )
-      </h3>
+      <h3>Komentar ({comments.length})</h3>
       <CommentList
         comments={comments}
         authUser={authUser}

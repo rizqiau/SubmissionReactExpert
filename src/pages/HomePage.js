@@ -6,12 +6,10 @@ import ThreadList from '../components/ThreadList';
 import CategoryFilter from '../components/CategoryFilter';
 
 function HomePage() {
-  const {
-    threads = [],
-    users = [],
-    authUser = null,
-    loadingBar = 0,
-  } = useSelector((states) => states);
+  const threads = useSelector((state) => state.threads);
+  const users = useSelector((state) => state.users);
+  const authUser = useSelector((state) => state.authUser);
+  const loadingBar = useSelector((state) => state.loadingBar);
 
   const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState('');

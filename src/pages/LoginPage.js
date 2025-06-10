@@ -9,14 +9,13 @@ function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onLogin = (event) => {
+  const onLogin = async (event) => {
     event.preventDefault();
-
-    dispatch(asyncSetAuthUser({ email, password })).then(() => {
+    const result = await dispatch(asyncSetAuthUser({ email, password }));
+    if (result && result.success) {
       navigate('/');
-    });
+    }
   };
-
   return (
     <div className="auth-page">
       <h2>Login</h2>
@@ -38,9 +37,7 @@ function LoginPage() {
         <button type="submit">Login</button>
       </form>
       <p>
-        Belum punya akun?
-        {' '}
-        <Link to="/register">Daftar di sini</Link>
+        Belum punya akun? <Link to="/register">Daftar di sini</Link>
       </p>
     </div>
   );

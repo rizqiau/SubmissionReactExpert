@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import parser from 'html-react-parser';
-import { useSelector, useDispatch } from 'react-redux';
-import { postedAt } from '../utils';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import parser from "html-react-parser";
+import { useSelector, useDispatch } from "react-redux";
+import { postedAt } from "../utils";
 import {
   asyncUpVoteThread,
   asyncDownVoteThread,
   // eslint-disable-next-line no-unused-vars
   asyncNeutralizeThreadVote,
-} from '../states/threads/action';
+} from "../states/threads/action";
 
 function ThreadItem({
   id,
@@ -23,7 +23,7 @@ function ThreadItem({
   totalComments,
 }) {
   const dispatch = useDispatch();
-  const { authUser } = useSelector((states) => states);
+  const authUser = useSelector((state) => state.authUser);
 
   const isUpVoted = authUser ? upVotesBy.includes(authUser.id) : false;
   const isDownVoted = authUser ? downVotesBy.includes(authUser.id) : false;
@@ -31,7 +31,7 @@ function ThreadItem({
   const onUpVote = (event) => {
     event.stopPropagation();
     if (!authUser) {
-      alert('You must be logged in to vote.');
+      alert("You must be logged in to vote.");
       return;
     }
     dispatch(asyncUpVoteThread(id));
@@ -40,7 +40,7 @@ function ThreadItem({
   const onDownVote = (event) => {
     event.stopPropagation();
     if (!authUser) {
-      alert('You must be logged in to vote.');
+      alert("You must be logged in to vote.");
       return;
     }
     dispatch(asyncDownVoteThread(id));
@@ -49,36 +49,27 @@ function ThreadItem({
   return (
     <Link to={`/threads/${id}`} className="thread-item">
       <div className="thread-item__header">
-        <p className="thread-item__category">
-          #
-          {category}
-        </p>
+        <p className="thread-item__category">#{category}</p>
         <h3 className="thread-item__title">{title}</h3>
       </div>
       <div className="thread-item__body">
-        <p>
-          {parser(body.substring(0, 150) + (body.length > 150 ? '...' : ''))}
-        </p>
+        <div>
+          {parser(body.substring(0, 150) + (body.length > 150 ? "..." : ""))}
+        </div>
       </div>
       <div className="thread-item__footer">
         <div className="thread-item__votes">
           <button
             type="button"
-            className={`vote-button ${isUpVoted ? 'voted' : ''}`}
-            onClick={onUpVote}
-          >
-            👍
-            {' '}
-            {upVotesBy.length}
+            className={`vote-button ${isUpVoted ? "voted" : ""}`}
+            onClick={onUpVote}>
+            👍 {upVotesBy.length}
           </button>
           <button
             type="button"
-            className={`vote-button ${isDownVoted ? 'voted' : ''}`}
-            onClick={onDownVote}
-          >
-            👎
-            {' '}
-            {downVotesBy.length}
+            className={`vote-button ${isDownVoted ? "voted" : ""}`}
+            onClick={onDownVote}>
+            👎 {downVotesBy.length}
           </button>
         </div>
         <p className="thread-item__comments">
@@ -86,11 +77,7 @@ function ThreadItem({
           {totalComments}
         </p>
         <p className="thread-item__user">
-          Dibuat oleh
-          {' '}
-          <img src={owner.avatar} alt={owner.name} />
-          {' '}
-          {owner.name}
+          Dibuat oleh <img src={owner.avatar} alt={owner.name} /> {owner.name}
         </p>
         <p className="thread-item__date">{postedAt(createdAt)}</p>
       </div>

@@ -1,6 +1,6 @@
 import { ActionType } from './action';
 
-function leaderboardsReducer(action, leaderboards = []) {
+function leaderboardsReducer(leaderboards = [], action) {
   switch (action.type) {
     case ActionType.RECEIVE_LEADERBOARDS:
       return action.payload.leaderboards;
