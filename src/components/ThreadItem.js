@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import parser from "html-react-parser";
-import { useSelector, useDispatch } from "react-redux";
-import { postedAt } from "../utils";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import parser from 'html-react-parser';
+import { useSelector, useDispatch } from 'react-redux';
+import { postedAt } from '../utils';
 import {
   asyncUpVoteThread,
   asyncDownVoteThread,
   // eslint-disable-next-line no-unused-vars
   asyncNeutralizeThreadVote,
-} from "../states/threads/action";
+} from '../states/threads/action';
 
 function ThreadItem({
   id,
@@ -31,7 +31,7 @@ function ThreadItem({
   const onUpVote = (event) => {
     event.stopPropagation();
     if (!authUser) {
-      alert("You must be logged in to vote.");
+      alert('You must be logged in to vote.');
       return;
     }
     dispatch(asyncUpVoteThread(id));
@@ -40,7 +40,7 @@ function ThreadItem({
   const onDownVote = (event) => {
     event.stopPropagation();
     if (!authUser) {
-      alert("You must be logged in to vote.");
+      alert('You must be logged in to vote.');
       return;
     }
     dispatch(asyncDownVoteThread(id));
@@ -54,20 +54,20 @@ function ThreadItem({
       </div>
       <div className="thread-item__body">
         <div>
-          {parser(body.substring(0, 150) + (body.length > 150 ? "..." : ""))}
+          {parser(body.substring(0, 150) + (body.length > 150 ? '...' : ''))}
         </div>
       </div>
       <div className="thread-item__footer">
         <div className="thread-item__votes">
           <button
             type="button"
-            className={`vote-button ${isUpVoted ? "voted" : ""}`}
+            className={`vote-button ${isUpVoted ? 'voted' : ''}`}
             onClick={onUpVote}>
             👍 {upVotesBy.length}
           </button>
           <button
             type="button"
-            className={`vote-button ${isDownVoted ? "voted" : ""}`}
+            className={`vote-button ${isDownVoted ? 'voted' : ''}`}
             onClick={onDownVote}>
             👎 {downVotesBy.length}
           </button>
