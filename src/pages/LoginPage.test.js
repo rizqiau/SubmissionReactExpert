@@ -39,7 +39,7 @@ describe('LoginPage Component', () => {
     );
 
     // Assert
-    const emailInput = screen.getByPlaceholderText('Email');
+    const emailInput = screen.getByPlaceholderText('Emaile');
     const passwordInput = screen.getByPlaceholderText('Password');
     const loginButton = screen.getByRole('button', { name: 'Login' });
 
