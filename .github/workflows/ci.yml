@@ -10,18 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Menggunakan versi terbaru untuk performa dan keamanan yang lebih baik
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Menetapkan versi Node.js secara spesifik, misal: 18.x
       - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
           node-version: '18.x'
-          cache: 'npm' # Menambahkan cache untuk mempercepat proses install
+          cache: 'npm'
 
-      # Memperbaiki sintaks run dan menggabungkan dalam satu langkah
       - name: Install Dependencies and Run Tests
         run: |
           npm install
