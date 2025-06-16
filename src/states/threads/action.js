@@ -62,17 +62,22 @@ function asyncAddThread({ title, body, category }) {
   return async (dispatch) => {
     dispatch(showLoadingBar());
     try {
-      const { error, data: thread } = await apiService.createThread({
+      // Ambil seluruh objek respons
+      const response = await apiService.createThread({
         title,
         body,
         category,
       });
-      if (!error) {
-        dispatch(addThreadActionCreator(thread.thread));
+
+      if (!response.error) {
+        // Jika tidak ada error, dispatch aksi ADD_THREAD dengan data thread
+        dispatch(addThreadActionCreator(response.data.thread));
       } else {
-        alert(thread.data || 'Failed to create thread.');
+        // Jika ada error, tampilkan alert dengan pesan error dari respons
+        alert(response.message || 'Failed to create thread.');
       }
-    } catch (error) {
+    } catch (caughtError) {
+      // Tangani error tak terduga (misalnya masalah jaringan)
       alert('An unexpected error occurred while creating thread.');
     }
     dispatch(hideLoadingBar());
@@ -83,16 +88,8 @@ function asyncPopulateThreadsAndUsers() {
   return async (dispatch) => {
     dispatch(showLoadingBar());
     try {
-      const {
-        error: threadsError,
-        data: threadsData,
-        message: threadsMessage,
-      } = await apiService.getAllThreads();
-      const {
-        error: usersError,
-        data: usersData,
-        message: usersMessage,
-      } = await apiService.getAllUsers();
+      const { error: threadsError, data: threadsData, message: threadsMessage } = await apiService.getAllThreads();
+      const { error: usersError, data: usersData, message: usersMessage } = await apiService.getAllUsers();
 
       if (!threadsError) {
         dispatch(receiveThreadsActionCreator(threadsData.threads));
@@ -126,15 +123,11 @@ function asyncUpVoteThread(threadId) {
     try {
       const { error } = await apiService.upVoteThread(threadId);
       if (error) {
-        dispatch(
-          neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }),
-        );
+        dispatch(neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }));
         alert('Failed to upvote thread. Please try again.');
       }
     } catch (error) {
-      dispatch(
-        neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }),
-      );
+      dispatch(neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }));
       alert('An unexpected error occurred while upvoting thread.');
     }
     dispatch(hideLoadingBar());
@@ -155,15 +148,11 @@ function asyncDownVoteThread(threadId) {
     try {
       const { error } = await apiService.downVoteThread(threadId);
       if (error) {
-        dispatch(
-          neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }),
-        );
+        dispatch(neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }));
         alert('Failed to downvote thread. Please try again.');
       }
     } catch (error) {
-      dispatch(
-        neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }),
-      );
+      dispatch(neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }));
       alert('An unexpected error occurred while downvoting thread.');
     }
     dispatch(hideLoadingBar());
@@ -178,9 +167,7 @@ function asyncNeutralizeThreadVote(threadId) {
       return;
     }
 
-    dispatch(
-      neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }),
-    );
+    dispatch(neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }));
     dispatch(showLoadingBar());
 
     try {
