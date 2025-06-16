@@ -17,7 +17,7 @@ function AddCommentForm({ onAddComment }) {
       <h3>Beri Komentar</h3>
       <form onSubmit={onSubmit}>
         <textarea
-          placeholder="Tulis komentarmu di sini..."
+          placeholder="Tulis komentarmu di sini...."
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows="5"
